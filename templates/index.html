@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDR Sensor</title>
+</head>
+<body>
+    <h1>LDR Sensor Dashboard</h1>
+    
+    <h2>Day Values</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>LDR Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for idx, value in enumerate(day_values) %}
+                <tr>
+                    <td>{{ idx + 1 }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Night Values</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>LDR Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for idx, value in enumerate(night_values) %}
+                <tr>
+                    <td>{{ idx + 1 }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        // Function to fetch and update LDR values
+        function fetchLdrData() {
+            fetch('/get_ldr')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('LDR Value:', data.ldr);
+                })
+                .catch(error => console.error('Error fetching LDR data:', error));
+        }
+
+        // Fetch LDR data every 2 seconds
+        setInterval(fetchLdrData, 2000);
+    </script>
+</body>
+</html>
